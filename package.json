@@ -1,0 +1,22 @@
+{
+  "name": "@shrumpf/aoc",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "bin": {
+    "download": "./scripts/download-input.js"
+  },
+  "scripts": {
+    "download": "node ./scripts/download-input --"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.9.1",
+    "prompts": "^2.4.2"
+  },
+  "dependencies": {
+    "minimist": "^1.2.8"
+  }
+}

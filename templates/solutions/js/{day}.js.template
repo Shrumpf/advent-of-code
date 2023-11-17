@@ -1,0 +1,33 @@
+import { readExampleInput } from "../../tools/read.js";
+const exampleInput = readExampleInput("{{year}}", "{{day}}");
+
+/**
+ * 
+ * @param {string} input 
+ * @returns {string | number}
+ */
+export function part_a(input) {
+    const list = input.split(/\r?\n/);
+    let solution;
+
+    // CODE GOES HERE
+
+    return solution;
+}
+
+/**
+ * 
+ * @param {string} input 
+ * @returns {string | number}
+ */
+export function part_b(input) {
+    const list = input.split(/\r?\n/);
+    let solution;
+
+    // CODE GOES HERE
+
+    return solution;
+}
+
+part_a(exampleInput);
+part_b(exampleInput);
