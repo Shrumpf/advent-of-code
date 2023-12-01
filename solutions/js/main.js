@@ -1,11 +1,13 @@
+#!/usr/bin/env bun
+
 import { readInput } from "./tools/read.js";
 import minimist from "minimist";
 
 let { year, day, part } = minimist(process.argv.slice(2), {
     string: ["year", "day"],
     default: {
-        "year": "2020",
-        "day": "01",
+        "year": new Date().getFullYear().toString(),
+        "day": new Date().getDate().toString().padStart(2, "0"),
         "part": null
     }
 });
@@ -13,7 +15,7 @@ let { year, day, part } = minimist(process.argv.slice(2), {
 day = day.padStart(2, "0");
 
 try {
-    const { part_a, part_b } = await import(`./years/${year.toString()}/${day.toString().padStart(2, "0")}.js`);
+    const { part_a, part_b } = await import(`./years/${year.toString()}/${day}.js`);
 
     if (part === "a" || part === null && part_a) {
         console.log(part_a(readInput(year, day)));
