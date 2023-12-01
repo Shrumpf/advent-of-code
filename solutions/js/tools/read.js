@@ -24,10 +24,11 @@ export function readInput(year, day) {
 /**
  * @param {string} year 
  * @param {string} day 
+ * @param {string} part
  * @returns {string}
  */
-export function readExampleInput(year, day) {
-    return read(path.join(examples_dir, year, `${day}.input.txt`));
+export function readExampleInput(year, day, part) {
+    return read(path.join(examples_dir, year, `${day}${part ?? ''}.input.txt`));
 }
 
 /**
