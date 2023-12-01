@@ -1,14 +1,13 @@
 {
-  "name": "@shrumpf/aoc",
+  "name": "@shrumpf/advent-of-code",
+  "private": true,
   "version": "0.1.0",
   "description": "",
-  "main": "main.js",
   "type": "module",
-  "bin": {
-    "download": "./scripts/download-input.js"
-  },
   "scripts": {
-    "download": "node ./scripts/download-input --"
+    "main": "node ./solutions/js/main.js",
+    "download": "node ./scripts/download-input.js",
+    "generate:js": "node ./templates/generate-templates.js --lang=js"
   },
   "keywords": [],
   "license": "ISC",
