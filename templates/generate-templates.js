@@ -1,12 +1,24 @@
-import { copyFileSync, mkdirSync, existsSync, readFileSync, writeFileSync, readdirSync, stat, statSync } from "fs";
-import path, { dirname } from "path";
+#!/usr/bin/env node
+
+import 'dotenv/config'
+import minimist from "minimist";
 import prompts from "prompts";
-import { fileURLToPath } from "url";
+import { copyFileSync, mkdirSync, existsSync, readFileSync, writeFileSync, readdirSync } from "fs";
+import { dirname } from "path";
+
 
 const { PROJECT_ROOT } = process.env;
 
-const year = "2021";
-const day = "01";
+let { year, day } = minimist(process.argv.slice(2), {
+    string: ["year", "day", "lang"],
+    default: {
+        "year": new Date().getFullYear().toString(),
+        "day": new Date().getDate().toString().padStart(2, "0"),
+        "lang": "js",
+    }
+});
+
+day = day.padStart(2, "0");
 
 // const templatePath = "./" + lang + "/{{day}}.ejs";
 // const toPath = "../solutions/" + lang + "/years/" + year + "/" + day + ".js";
@@ -83,4 +95,3 @@ for (const file of exampleTemplates) {
     const templatePath = `${PROJECT_ROOT}/templates/${"examples"}/${file}`; //" + lang + "/" + file;
     await copyTemplate(templatePath, toPath);
 }
-//# sourceMappingURL=main.js.map
