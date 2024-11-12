@@ -18,7 +18,7 @@ function read(file) {
  * @returns {string}
  */
 export function readInput(year, day) {
-    return read(path.join(input_dir, year, `${day}.input.txt`));
+    return read(path.join(input_dir, year, day, `${day}.input.txt`)).trim();
 }
 
 /**
@@ -28,7 +28,7 @@ export function readInput(year, day) {
  * @returns {string}
  */
 export function readExampleInput(year, day, part) {
-    return read(path.join(examples_dir, year, `${day}${part ?? ''}.input.txt`));
+    return read(path.join(examples_dir, year, day, `${day}${part ?? ''}.input.txt`)).trim();
 }
 
 /**
@@ -37,5 +37,5 @@ export function readExampleInput(year, day, part) {
  * @returns {string}
  */
 export function readExampleSolution(year, day, part = "a") {
-    return read(path.join(examples_dir, year, `${day}${part}.solution.txt`));
+    return read(path.join(examples_dir, year, day, `${day}${part}.solution.txt`)).trim();
 }
