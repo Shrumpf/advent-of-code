@@ -6,7 +6,7 @@ import minimist from "minimist";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
-const { AOC_USER_AGENT, AOC_SESSION_COOKIE } = process.env;
+const { AOC_USER_AGENT, AOC_SESSION_COOKIE, PROJECT_ROOT } = process.env;
 
 let { year, day } = minimist(process.argv.slice(2), {
     string: ["year", "day"],
@@ -25,7 +25,7 @@ day = day.padStart(2, "0");
  * @param {string} day 
  * @returns 
  */
-async function getInput(year, day) {
+async function getInput(year: string, day: string) {
     const url = new URL(`https://adventofcode.com/${year}/day/${parseInt(day)}/input`);
 
     if (!AOC_SESSION_COOKIE && !AOC_USER_AGENT) {
@@ -36,8 +36,8 @@ async function getInput(year, day) {
         method: "GET",
         credentials: "include",
         headers: {
-            "Cookie": `session=${AOC_SESSION_COOKIE}`,
-            "User-Agent": AOC_USER_AGENT,
+            "Cookie": `session=${AOC_SESSION_COOKIE!}`,
+            "User-Agent": AOC_USER_AGENT!,
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/jxl,image/webp,*/*;q=0.8",
             "Accept-Language": "en-US,en;q=0.5",
             "Upgrade-Insecure-Requests": "1",
@@ -56,9 +56,9 @@ async function getInput(year, day) {
  * @param {string} year 
  * @param {string} day 
  */
-async function saveInput(year, day) {
+async function saveInput(year: string, day: string) {
     try {
-        const inputPath = path.join(process.cwd(), "inputs", year);
+        const inputPath = path.join(PROJECT_ROOT!, "inputs", year, day);
         const filePath = path.join(inputPath, `${day}.input.txt`);
 
         if (!existsSync(inputPath)) {
@@ -66,7 +66,7 @@ async function saveInput(year, day) {
         }
 
         if (existsSync(filePath)) {
-            const existingFile = await readFile(path.join(inputPath, `${day}.input.txt`));
+            const existingFile = await readFile(filePath);
             if (existingFile.length > 0) {
                 throw new Error("Already exists!");
             }
@@ -75,16 +75,14 @@ async function saveInput(year, day) {
 
         const data = await getInput(year, day);
 
-        writeFile(filePath, data, {
-            flag: "w+",
-        });
-
-
+        if (data) {
+            writeFile(filePath, data, {
+                flag: "w+",
+            });
+        }
     } catch (ex) {
-        switch (ex.code) {
-            default:
-                console.error(ex);
-                break;
+        if (ex instanceof Error) {
+            console.error(ex);
         }
     }
 }

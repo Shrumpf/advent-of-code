@@ -1,0 +1,33 @@
+{
+  "name": "@shrumpf/advent-of-code",
+  "private": true,
+  "version": "0.1.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "download:input": "node ./dist/download-input.js",
+    "start:input": "node ./dist/download-input.js",
+    "download:md": "node ./dist/download-markdown.js",
+    "start:md": "node ./dist/download-markdown.js",
+    "download": "pnpm run /^download:.*/",
+    "generate:js": "node ./dist/generate-templates.js --lang=js",
+    "start:js": "node ./dist/generate-templates.js --lang=js",
+    "start": "pnpm run /^start:.*/"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^22.9.0",
+    "@types/prompts": "^2.4.9",
+    "@types/turndown": "^5.0.5",
+    "prompts": "^2.4.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "minimist": "^1.2.8",
+    "turndown": "^7.2.0",
+    "turndown-plugin-gfm": "^1.0.2"
+  }
+}

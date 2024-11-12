@@ -32,7 +32,7 @@ export function part_b(input) {
     list.map(c => c.split(":")[1].split("|").map(c => c.trim().replaceAll("  ", " ").split(" "))).forEach((card, i) => {
         let points = card[0].filter((val) => card[1].indexOf(val) != -1).length;
         solution += points > 0 ? Math.pow(2, points - 1) : 0;
-        console.log(copies);
+        // console.log(copies);
         while (points) {
             copies[i + points--] += copies[i];
         }
