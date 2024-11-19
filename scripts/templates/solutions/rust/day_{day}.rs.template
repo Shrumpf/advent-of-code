@@ -1,0 +1,56 @@
+use common::{Answer, Solution};
+
+pub struct Day{{day}};
+
+impl Solution for Day{{day}} {
+    fn name(&self) -> &'static str {
+        "~~ TODO ~~"
+    }
+
+    fn year(&self) -> &'static u16 {
+        &{{year}}
+    }
+
+    fn day(&self) -> &'static u32 {
+        &{{day_as_int}}
+    }
+
+    fn part_a(&self, input: &str) -> Answer {
+        "unsolved".into()
+    }
+
+    fn part_b(&self, input: &str) -> Answer {
+        "unsolved".into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use common::load_example;
+    use common::load_example_solution;
+
+    #[test]
+    fn part_a() {
+        let year = *Day{{day}}.year();
+        let day = *Day{{day}}.day();
+        let part = common::Part::A;
+
+        let input = load_example(year, day);
+        let res = Day{{day}}.part_a(&input);
+        let ans = load_example_solution(year, day, part);
+        assert_eq!(res, ans);
+    }
+
+    #[test]
+    fn part_b() {
+        let year = *Day{{day}}.year();
+        let day = *Day{{day}}.day();
+        let part = common::Part::B;
+
+        let input = load_example(year, day);
+        let res = Day{{day}}.part_b(&input);
+        let ans = load_example_solution(year, day, part);
+        assert_eq!(res, ans);
+    }
+}

@@ -9,7 +9,7 @@ import { dirname } from "path";
 
 const { PROJECT_ROOT } = process.env;
 
-let { year, day } = minimist(process.argv.slice(2), {
+let { year, day, lang } = minimist(process.argv.slice(2), {
     string: ["year", "day", "lang"],
     default: {
         "year": new Date().getFullYear().toString(),
@@ -20,14 +20,11 @@ let { year, day } = minimist(process.argv.slice(2), {
 
 day = day.padStart(2, "0");
 
-// const templatePath = "./" + lang + "/{{day}}.ejs";
-// const toPath = "../solutions/" + lang + "/years/" + year + "/" + day + ".js";
-
 function getFiles(folder: string) {
     return readdirSync(`${PROJECT_ROOT}/scripts/templates/${folder}`);
 }
 function replacePlaceHolder(toPath: string) {
-    let fileContent = readFileSync(toPath).toString().replaceAll("{{day}}", day).replaceAll("{{year}}", year);
+    let fileContent = readFileSync(toPath).toString().replaceAll("{{day}}", day).replaceAll("{{year}}", year).replaceAll("{{day_as_int}}", parseInt(day).toString());
     writeFileSync(toPath, fileContent);
 }
 async function copyTemplate(templatePath: string, toPath: string) {
@@ -79,14 +76,27 @@ async function copyTemplate(templatePath: string, toPath: string) {
 //     }    
 // }
 
-const solutionTemplates = getFiles("solutions/js");
-for (const file of solutionTemplates) {
-    const fileName = file.replace("{day}", day).replace(".template", "");
-    // Solutions!
-    const toPath = `${PROJECT_ROOT}/${"solutions/js"}/years/${year}/${fileName}`; // "../solutions/" + lang + "/years/" + year + "/" + fileName;
-    const templatePath = `${PROJECT_ROOT}/scripts/templates/${"solutions/js"}/${file}`; //" + lang + "/" + file;
-    await copyTemplate(templatePath, toPath);
+if (lang === "js") {
+    const solutionTemplates = getFiles(`solutions/js`);
+    for (const file of solutionTemplates) {
+        const fileName = file.replace("{day}", day).replace(".template", "");
+        // Solutions!
+        const toPath = `${PROJECT_ROOT}/solutions/js/years/${year}/${fileName}`; // "../solutions/" + lang + "/years/" + year + "/" + fileName;
+        const templatePath = `${PROJECT_ROOT}/scripts/templates/solutions/js/${file}`; //" + lang + "/" + file;
+        await copyTemplate(templatePath, toPath);
+    }
+} else if (lang === "rust") {
+    const solutionTemplates = getFiles(`solutions/rust`);
+    for (const file of solutionTemplates) {
+        const fileName = file.replace("{day}", day).replace(".template", "");
+        // Solutions!
+        const toPath = `${PROJECT_ROOT}/solutions/rust/aoc_${year}/src/${fileName}`; // "../solutions/" + lang + "/years/" + year + "/" + fileName;
+        const templatePath = `${PROJECT_ROOT}/scripts/templates/solutions/rust/${file}`; //" + lang + "/" + file;
+        await copyTemplate(templatePath, toPath);
+    }
 }
+
+
 
 const exampleTemplates = getFiles("examples");
 for (const file of exampleTemplates) {

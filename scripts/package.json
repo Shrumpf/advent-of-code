@@ -12,7 +12,8 @@
     "download": "pnpm run /^download:.*/",
     "generate:js": "node ./dist/generate-templates.js --lang=js",
     "start:js": "node ./dist/generate-templates.js --lang=js",
-    "start": "pnpm run /^start:.*/"
+    "start": "pnpm run /^start:.*/",
+    "build": "tsc"
   },
   "keywords": [],
   "license": "ISC",
