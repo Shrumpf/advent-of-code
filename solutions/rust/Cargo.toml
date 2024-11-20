@@ -25,6 +25,7 @@ renamed_function_params = "warn"
 todo = "warn"
 
 [dependencies]
+aoc_2018 = { path = "aoc_2018" }
 aoc_2022 = { path = "aoc_2022" }
 aoc_2023 = { path = "aoc_2023" }
 
