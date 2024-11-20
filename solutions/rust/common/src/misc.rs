@@ -20,8 +20,8 @@ pub fn load_example(year: u16, day: u32, part: Part) -> String {
     println!("{}", path);
     let file = fs::read_to_string(path);
 
-    if file.is_ok() {
-        return file.unwrap();
+    if let Ok(file) = file {
+        return file;
     }
 
     let path_with_part = format!(
