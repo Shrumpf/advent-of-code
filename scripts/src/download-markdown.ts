@@ -163,28 +163,23 @@ async function getHtml(year: string, day: string) {
  */
 async function saveMarkdown(year: string, day: string) {
     try {
-        const inputPath = path.join(PROJECT_ROOT!, "examples", year, day);
+        const inputPath = path.join(PROJECT_ROOT!, "inputs", year, day);
         const filePath = path.join(inputPath, `README.md`);
 
         if (!existsSync(inputPath)) {
-            await mkdir(inputPath);
-        }
-
-        if (existsSync(filePath)) {
-            const existingFile = await readFile(filePath);
-            if (existingFile.length > 0) {
-                throw new Error("Already exists!");
-            }
-            console.log("File is there, but empty, refill");
+            await mkdir(inputPath, { recursive: true });
         }
 
         const data = await getMarkdown(year, day);
 
-        if (data) {
-            writeFile(filePath, data, {
-                flag: "w+",
-            });
+        if (!data) {
+            throw new Error("Couldn't generate markdown")
         }
+
+        writeFile(filePath, data, {
+            flag: "w+",
+        });
+
     } catch (ex) {
         if (ex instanceof Error) {
             console.error(ex);

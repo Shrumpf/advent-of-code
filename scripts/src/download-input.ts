@@ -62,7 +62,7 @@ async function saveInput(year: string, day: string) {
         const filePath = path.join(inputPath, `${day}.input.txt`);
 
         if (!existsSync(inputPath)) {
-            await mkdir(inputPath);
+            await mkdir(inputPath, { recursive: true });
         }
 
         if (existsSync(filePath)) {
