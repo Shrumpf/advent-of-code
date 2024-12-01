@@ -22,7 +22,6 @@ impl Solution for Day01 {
             .lines()
             .map(|l| l.parse::<i32>().unwrap())
             .sum::<i32>()
-            .to_string()
             .into()
     }
 
@@ -35,7 +34,7 @@ impl Solution for Day01 {
                 frequency += change;
 
                 if history.contains(&frequency) {
-                    return frequency.to_string().into();
+                    return frequency.into();
                 }
 
                 history.insert(frequency);

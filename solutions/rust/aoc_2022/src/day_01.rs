@@ -46,7 +46,7 @@ impl Solution for Day01 {
         numbers.reverse();
         let max = [numbers[0], numbers[1], numbers[2]].iter().sum::<u32>();
 
-        max.to_string().into()
+        max.into()
     }
 }
 

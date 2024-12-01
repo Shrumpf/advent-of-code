@@ -1,6 +1,6 @@
 use std::fmt::{self, Display};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug)]
 pub enum Answer {
     String(String),
     Number(u64),
@@ -34,6 +34,16 @@ impl From<&str> for Answer {
 impl From<()> for Answer {
     fn from(_value: ()) -> Self {
         Self::Unimplemented
+    }
+}
+
+impl PartialEq for Answer {
+    fn eq(&self, other: &Self) -> bool {
+        self.to_string() == other.to_string()
+    }
+
+    fn ne(&self, other: &Self) -> bool {
+        !self.eq(other)
     }
 }
 

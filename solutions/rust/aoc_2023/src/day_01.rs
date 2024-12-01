@@ -25,7 +25,6 @@ impl Solution for Day01 {
             .map(|l| format!("{}{}", l.chars().nth(0).unwrap(), l.chars().last().unwrap()))
             .map(|l| l.parse::<i32>().unwrap())
             .sum::<i32>()
-            .to_string()
             .into()
     }
 
@@ -52,7 +51,6 @@ impl Solution for Day01 {
             .map(|l| format!("{}{}", l.chars().nth(0).unwrap(), l.chars().last().unwrap()))
             .map(|l| l.parse::<i32>().unwrap())
             .sum::<i32>()
-            .to_string()
             .into()
     }
 }

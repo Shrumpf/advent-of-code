@@ -7,7 +7,12 @@ use crate::{args::RunArgs, get_year, get_years};
 
 fn run_solution(solution: &dyn Solution, part: Option<Part>) -> u128 {
     let input = load(*solution.year(), *solution.day()).unwrap();
-    println!("[*] Running: {}", solution.name());
+    println!(
+        "[*] Running: {} Day {}: {}",
+        solution.year(),
+        solution.day(),
+        solution.name()
+    );
 
     if part.is_some() {
         let start = Instant::now();
