@@ -1,0 +1,12 @@
+[package]
+name = "aoc_2024"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[dependencies]
+common = { path = "../common" }
+
+anyhow = { workspace = true }
+itertools = { workspace = true }

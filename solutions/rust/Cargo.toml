@@ -28,6 +28,7 @@ todo = "warn"
 aoc_2018 = { path = "aoc_2018" }
 aoc_2022 = { path = "aoc_2022" }
 aoc_2023 = { path = "aoc_2023" }
+aoc_2024 = { path = "aoc_2024" }
 
 chrono = "0.4.23"
 anyhow = "1.0.93"
@@ -37,3 +38,4 @@ common = { path = "common" }
 [workspace.dependencies]
 anyhow = "1.0.93"
 regex = "1.11.1"
+itertools = "0.13.0"

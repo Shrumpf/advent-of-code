@@ -18,8 +18,13 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn get_years() -> [&'static [&'static dyn Solution]; 3] {
-    [&aoc_2018::ALL, &aoc_2022::ALL, &aoc_2023::ALL]
+fn get_years() -> [&'static [&'static dyn Solution]; 4] {
+    [
+        &aoc_2018::ALL,
+        &aoc_2022::ALL,
+        &aoc_2023::ALL,
+        &aoc_2024::ALL,
+    ]
 }
 
 fn get_year(year: u16) -> &'static [&'static dyn Solution] {
@@ -27,6 +32,7 @@ fn get_year(year: u16) -> &'static [&'static dyn Solution] {
         2018 => &aoc_2018::ALL,
         2022 => &aoc_2022::ALL,
         2023 => &aoc_2023::ALL,
+        2024 => &aoc_2024::ALL,
         _ => &[],
     }
 }
