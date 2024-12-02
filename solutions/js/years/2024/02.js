@@ -1,8 +1,32 @@
-import { readExampleInput, readInput } from "../../tools/read.js";
+import { readExampleInput } from "../../tools/read.js";
 const exampleInput = readExampleInput("2024", "02");
 
-const isSortedA = (arr) => arr.every((v, i, a) => !i || a[i - 1] <= v);
-const isSortedD = (arr) => arr.every((v, i, a) => !i || a[i - 1] >= v);
+function isSorted(levels) {
+  return (
+    levels.every((level, i) => !i || levels[i - 1] <= level) ||
+    levels.every((level, i) => !i || levels[i - 1] >= level)
+  );
+}
+
+function checkDistance(level, i, levels) {
+  return (
+    i === 0 ||
+    (Math.abs(level - levels[i - 1]) >= 1 &&
+      Math.abs(level - levels[i - 1]) <= 3)
+  );
+}
+
+function areSafe(levels) {
+  return isSorted(levels) && levels.every(checkDistance);
+}
+
+function areNotSafe(levels) {
+  return !areSafe(levels);
+}
+
+function hasSecondChance(levels) {
+  return levels.some((_, i) => areSafe(levels.toSpliced(i, 1)));
+}
 
 /**
  *
@@ -10,30 +34,10 @@ const isSortedD = (arr) => arr.every((v, i, a) => !i || a[i - 1] >= v);
  * @returns {string | number}
  */
 export function part_a(input) {
-  const list = input.split(/\r?\n/);
-  let solution = 0;
-
-  for (let report of list) {
-    const levels = report.split(" ").map(Number);
-
-    if (isSortedA(levels) || isSortedD(levels)) {
-      let isSafe = true;
-      for (let i = 1; i < levels.length; i++) {
-        const first = levels[i - 1];
-        const second = levels[i];
-        const diff = Math.abs(first - second);
-        if (diff < 1 || diff > 3) {
-          isSafe = false;
-          break;
-        }
-      }
-      if (isSafe) {
-        solution++;
-      }
-    }
-  }
-
-  return solution;
+  return input
+    .split(/\r?\n/)
+    .map((report) => report.split(" ").map(Number))
+    .filter(areSafe).length;
 }
 
 /**
@@ -42,58 +46,36 @@ export function part_a(input) {
  * @returns {string | number}
  */
 export function part_b(input) {
-  function isSafe(levels) {
-    if (isSortedA(levels) || isSortedD(levels)) {
-      let isSafe = true;
-      for (let i = 1; i < levels.length; i++) {
-        const first = levels[i - 1];
-        const second = levels[i];
-        const diff = Math.abs(first - second);
-        if (diff < 1 || diff > 3) {
-          return false;
-        }
-      }
-
-      if (isSafe) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  function trySecondChance(levels) {
-    // wtf
-    const orig = JSON.parse(JSON.stringify(levels));
-
-    for (let i = 0; i < levels.length; i++) {
-      levels.splice(i, 1);
-      if (isSafe(levels)) {
-        return true;
-      }
-      // holy shit let my array alone
-      levels = [...orig];
-    }
-    return false;
-  }
-
-  const list = input.split(/\r?\n/);
   let solution = 0;
 
-  for (let report of list) {
-    const levels = report.split(" ").map(Number);
+  const list = input
+    .split(/\r?\n/)
+    .map((report) => report.split(" ").map(Number));
 
-    let safe = isSafe(levels);
-    if (!safe) {
-      safe = trySecondChance(levels);
-    }
-
-    if (safe) {
-      solution++;
-    }
-  }
+  solution += list.filter(areSafe).length;
+  solution += list.filter(areNotSafe).filter(hasSecondChance).length;
 
   return solution;
 }
 
 part_a(exampleInput);
 part_b(exampleInput);
+
+/* Don't look
+
+Yeah... dont...
+// function isSortedButCursed(array) {
+//   return (
+//     `${array.toSorted((a, b) => a - b)}` === `${array}` ||
+//     `${array.toSorted((a, b) => b - a)}` === `${array}`
+//   );
+// }
+
+Not even this... even if its faster than the cursed variant
+// function isSortedButJsonCursed(array) {
+//   return (
+//     JSON.stringify(array.toSorted((a, b) => a - b)) === JSON.stringify(array) ||
+//     JSON.stringify(array.toSorted((a, b) => b - a)) === JSON.stringify(array)
+//   );
+// }
+*/
