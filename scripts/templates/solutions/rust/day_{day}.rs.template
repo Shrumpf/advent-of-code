@@ -36,7 +36,7 @@ mod tests {
         let day = *Day{{day}}.day();
         let part = common::Part::A;
 
-        let input = load_example(year, day);
+        let input = load_example(year, day, part);
         let res = Day{{day}}.part_a(&input);
         let ans = load_example_solution(year, day, part);
         assert_eq!(res, ans);
@@ -48,7 +48,7 @@ mod tests {
         let day = *Day{{day}}.day();
         let part = common::Part::B;
 
-        let input = load_example(year, day);
+        let input = load_example(year, day, part);
         let res = Day{{day}}.part_b(&input);
         let ans = load_example_solution(year, day, part);
         assert_eq!(res, ans);
