@@ -1,11 +1,11 @@
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 use anyhow::{Context, Result};
-use common::{human_time, load, Part, Solution};
+use common::{load, Part, Solution};
 
 use crate::{args::RunArgs, get_year, get_years};
 
-fn run_solution(solution: &dyn Solution, part: Option<Part>) -> u128 {
+fn run_solution(solution: &dyn Solution, part: Option<Part>) -> Duration {
     let input = load(*solution.year(), *solution.day()).unwrap();
     println!(
         "[*] Running: {} Day {}: {}",
@@ -21,26 +21,26 @@ fn run_solution(solution: &dyn Solution, part: Option<Part>) -> u128 {
             Part::B => solution.part_b(&input),
         };
 
-        let time = start.elapsed().as_nanos();
+        let time = start.elapsed();
         println!(
-            "  [+] Part {}: {} ({})",
+            "  [+] Part {}: {} ({:.2?})",
             part.unwrap().to_string().to_uppercase(),
             out,
-            human_time(time)
+            time
         );
         return time;
     }
 
     let start_a = Instant::now();
     let sln_a = solution.part_a(&input);
-    let time_a = start_a.elapsed().as_nanos();
-    println!("  [+] Part A: {} ({})", sln_a, human_time(time_a));
+    let time_a = start_a.elapsed();
+    println!("  [+] Part A: {} ({:.2?})", sln_a, time_a);
 
     let start_b = Instant::now();
     let sln_b = solution.part_b(&input);
-    let time_b = start_b.elapsed().as_nanos();
+    let time_b = start_b.elapsed();
 
-    println!("  [+] Part B: {} ({})", sln_b, human_time(time_b));
+    println!("  [+] Part B: {} ({:.2?})", sln_b, time_b);
 
     time_a + time_b
 }
@@ -48,7 +48,7 @@ fn run_solution(solution: &dyn Solution, part: Option<Part>) -> u128 {
 pub fn run_all() -> Result<()> {
     let years = get_years();
 
-    let mut sum = 0;
+    let mut sum = Duration::new(0, 0);
     let mut solutions = 0;
 
     for year in years {
@@ -60,10 +60,10 @@ pub fn run_all() -> Result<()> {
     }
 
     println!(
-        "Everything done. {} year(s) and {} solution(s) with 2 parts took {}",
+        "Everything done. {} year(s) and {} solution(s) with 2 parts took {:.2?}",
         years.len(),
         solutions,
-        human_time(sum)
+        sum
     );
 
     Ok(())
@@ -72,7 +72,8 @@ pub fn run_all() -> Result<()> {
 pub fn run(cmd: &RunArgs) -> Result<()> {
     let solutions = get_year(cmd.year);
     let solution = solutions
-        .get(cmd.day.saturating_sub(1) as usize)
+        .iter()
+        .find(|s| s.day() == &cmd.day)
         .with_context(|| format!("No solution for day {} in year {}", cmd.day, cmd.year))?;
 
     run_solution(*solution, cmd.part);

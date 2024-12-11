@@ -49,17 +49,3 @@ pub fn load_example_solution(year: u16, day: u32, part: Part) -> Answer {
         Err(err) => panic!("{}", err),
     }
 }
-
-pub fn human_time(time: u128) -> String {
-    const TIME_UNITS: &[&str] = &["ns", "μs", "ms", "s"];
-
-    let mut time = time;
-    for i in TIME_UNITS {
-        if time < 1000 {
-            return format!("{}{}", time, i);
-        }
-        time /= 1000;
-    }
-
-    format!("{}{}", time, TIME_UNITS.last().unwrap())
-}

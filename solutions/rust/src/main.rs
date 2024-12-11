@@ -13,6 +13,7 @@ fn main() -> Result<()> {
         Commands::Run(cmd) => commands::run::run(cmd)?,
         Commands::List(cmd) => commands::list::list(cmd)?,
         Commands::RunAll => commands::run::run_all()?,
+        Commands::ListAll => commands::list::list_all()?,
     }
 
     Ok(())

@@ -21,6 +21,7 @@ pub enum Commands {
     /// List all solutions for a given year
     List(ListArgs),
     RunAll,
+    ListAll,
 }
 
 #[derive(Parser)]
