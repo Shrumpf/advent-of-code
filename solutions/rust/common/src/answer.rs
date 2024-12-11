@@ -41,10 +41,6 @@ impl PartialEq for Answer {
     fn eq(&self, other: &Self) -> bool {
         self.to_string() == other.to_string()
     }
-
-    fn ne(&self, other: &Self) -> bool {
-        !self.eq(other)
-    }
 }
 
 macro_rules! answer_impl {

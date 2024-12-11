@@ -10,22 +10,22 @@ fn parse_levels(input: &str) -> Vec<Vec<i32>> {
         .collect()
 }
 
-fn are_sorted(levels: &Vec<i32>) -> bool {
+fn are_sorted(levels: &[i32]) -> bool {
     levels.is_sorted() || levels.iter().rev().is_sorted()
 }
 
-fn has_distance(levels: &Vec<i32>) -> bool {
+fn has_distance(levels: &[i32]) -> bool {
     levels
         .windows(2)
         .all(|l| (l[0] - l[1]).abs() >= 1 && (l[0] - l[1]).abs() <= 3)
 }
 
-fn are_safe(levels: &Vec<i32>) -> bool {
+fn are_safe(levels: &[i32]) -> bool {
     are_sorted(levels) && has_distance(levels)
 }
 
-fn try_variants(levels: &Vec<i32>) -> bool {
-    let mut temp = levels.clone();
+fn try_variants(levels: &[i32]) -> bool {
+    let mut temp = levels.to_vec();
     for i in 0..levels.len() {
         temp.remove(i);
         if are_safe(&temp) {
