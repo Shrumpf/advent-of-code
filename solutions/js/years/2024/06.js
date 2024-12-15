@@ -124,129 +124,98 @@ function printMap(list) {
  * @returns {string | number}
  */
 export function part_b(input) {
+  function tryNewMap(list, obstacles, x, y, direction) {
+    while (true) {
+      let [dx, dy] = move[direction];
+      let nx = x + dx;
+      let ny = y + dy;
+
+      if (isNotValid(nx, ny)) {
+        return 0;
+      }
+
+      const key = `${nx},${ny}`;
+      if (!obstacles.has(key)) {
+        obstacles.set(key, []);
+      }
+
+      if (list[nx][ny] === "#") {
+        if (obstacles.get(key).includes(direction)) {
+          return 1;
+        } else {
+          obstacles.get(key).push(direction);
+          direction = (direction + 1) % move.length;
+        }
+      } else {
+        [x, y] = [nx, ny];
+        list[x][y] = 'X';
+      }
+    }
+  }
+
   let list = input.split(/\r?\n/).map((line) => line.split(""));
-  const orig = JSON.stringify(list);
   let solution = 0;
 
-  let currentDirection = "UP";
+  const obstacles = new Map();
+  const move = [[-1, 0], [0, 1], [1, 0], [0, -1]];
+  let direction = 0;
 
-  let startPoint;
-  let currentPosition;
+  const isNotValid = (x, y) => x >= list.length || x < 0 || y >= list[0].length || y < 0;
 
   for (let y = 0; y < list.length; y++) {
     for (let x = 0; x < list[y].length; x++) {
-      const cell = list[y][x];
+      if (list[y][x] === "#") {
+        obstacles.set(`${y},${x}`, []);
+      }
+    }
+  }
 
-      if (cell === "^") {
-        startPoint = [y, x];
+  let currentPosition = [0, 0];
+  for (let y = 0; y < list.length; y++) {
+    for (let x = 0; x < list[y].length; x++) {
+      if (list[y][x] === "^") {
         currentPosition = [y, x];
-        // list[currentPosition[0]][currentPosition[1]] = "X";
+        break;
       }
     }
   }
 
-  for (let y = 0; y < list.length; y++) {
-    for (let x = 0; x < list[y].length; x++) {
-      const counter = new Map();
+  while (true) {
+    let [x, y] = currentPosition;
+    let [dx, dy] = move[direction];
 
-      if (
-        list[y][x] === "^" ||
-        list[y][x] === "#" ||
-        !visited.has(`${y},${x}`)
-      ) {
-        continue;
+    let nx = x + dx;
+    let ny = y + dy;
+
+    if (isNotValid(nx, ny)) {
+      break;
+    }
+
+    if (list[nx][ny] === "#") {
+      if (!obstacles.get(`${nx},${ny}`).includes(direction)) {
+        obstacles.get(`${nx},${ny}`).push(direction);
+      }
+      direction = (direction + 1) % move.length;
+    } else {
+      if (list[nx][ny] !== "X") {
+        const listCopy = list.map(line => [...line]);
+        listCopy[nx][ny] = "#";
+
+        const obstacleCopy = new Map();
+        obstacles.forEach((value, key) => {
+          obstacleCopy.set(key, [...value]);
+        });
+
+        solution += tryNewMap(listCopy, obstacleCopy, currentPosition[0], currentPosition[1], direction);
       }
 
-      list[y][x] = "#";
-
-      let start = performance.now();
-
-      while (counter.values().every((v) => v < 5)) {
-        switch (currentDirection) {
-          case "UP": {
-            if (
-              currentPosition[0] - 1 >= 0 &&
-              list[currentPosition[0] - 1][currentPosition[1]] === "#"
-            ) {
-              currentDirection = "RIGHT";
-              break;
-            }
-            currentPosition[0] -= 1;
-            break;
-          }
-          case "DOWN": {
-            if (
-              currentPosition[0] + 1 < list.length &&
-              list[currentPosition[0] + 1][currentPosition[1]] === "#"
-            ) {
-              currentDirection = "LEFT";
-              break;
-            }
-            currentPosition[0] += 1;
-            break;
-          }
-          case "LEFT": {
-            if (
-              currentPosition[1] - 1 >= 0 &&
-              list[currentPosition[0]][currentPosition[1] - 1] === "#"
-            ) {
-              currentDirection = "UP";
-              break;
-            }
-            currentPosition[1] -= 1;
-            break;
-          }
-          case "RIGHT": {
-            if (
-              currentPosition[1] + 1 < list[0].length &&
-              list[currentPosition[0]][currentPosition[1] + 1] === "#"
-            ) {
-              currentDirection = "DOWN";
-              break;
-            }
-            currentPosition[1] += 1;
-            break;
-          }
-        }
-
-        if (
-          currentPosition[0] >= 1 &&
-          currentPosition[0] <= list.length - 1 &&
-          currentPosition[1] >= 1 &&
-          currentPosition[1] <= list[0].length - 1
-        ) {
-          if (counter.has(currentPosition.toString())) {
-            counter.set(
-              currentPosition.toString(),
-              counter.get(currentPosition.toString()) + 1
-            );
-          } else {
-            counter.set(currentPosition.toString(), 1);
-          }
-        } else {
-          //   console.log(`X: ${x}, Y: ${y} didn't break the loop`);
-          break;
-        }
-      }
-      let end = performance.now();
-      //   console.log(`Call to doSomething took ${end - start} milliseconds.`);
-      //   console.log(counter);
-      if (counter.values().some((v) => v === 5)) {
-        solution++;
-        // console.log(`X: ${x}, Y: ${y} breaked the loop`);
-      }
-      list = JSON.parse(orig);
-      currentPosition = [...startPoint];
-      currentDirection = "UP";
+      currentPosition = [nx, ny];
+      list[nx][ny] = 'X';
     }
   }
-
-  //   printMap(list);
-
-  // CODE GOES HERE
 
   return solution;
 }
 
-// part_a(exampleInput);
-// part_b(exampleInput);
+part_a(exampleInput);
+part_b(exampleInput);
