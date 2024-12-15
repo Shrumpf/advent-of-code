@@ -1,5 +1,5 @@
 use core::panic;
-use std::{fs, io};
+use std::{env, fs, io};
 
 use crate::{Answer, Part};
 
@@ -11,7 +11,17 @@ pub fn load(year: u16, day: u32) -> io::Result<String> {
 
 /// Load the input for the given year and day.
 pub fn load_raw(year: u16, day: u32) -> io::Result<String> {
-    let file = format!("../../inputs/{year}/{:02}/{:02}.input.txt", day, day);
+    let file = if env::current_dir()
+        .unwrap()
+        .to_str()
+        .unwrap()
+        .contains("aoc_")
+    {
+        format!("../../../inputs/{year}/{:02}/{:02}.input.txt", day, day)
+    } else {
+        format!("../../inputs/{year}/{:02}/{:02}.input.txt", day, day)
+    };
+
     fs::read_to_string(file)
 }
 

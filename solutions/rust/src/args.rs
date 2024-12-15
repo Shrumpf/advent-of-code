@@ -26,12 +26,12 @@ pub enum Commands {
 
 #[derive(Parser)]
 pub struct RunArgs {
-    /// The year to run
-    #[arg(default_value_t = current_year())]
-    pub year: u16,
     /// The day to run
     #[arg(default_value_t = current_day())]
     pub day: u32,
+    /// The year to run
+    #[arg(default_value_t = current_year())]
+    pub year: u16,
     /// The part to run, a or b
     pub part: Option<Part>,
     /// The location of the input file, will default to `data/{year:pad(2)}/{day:pad(2)}.txt`
