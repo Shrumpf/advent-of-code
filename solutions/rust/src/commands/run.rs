@@ -5,7 +5,7 @@ use common::{load, Part, Solution};
 
 use crate::{args::RunArgs, get_year, get_years};
 
-fn run_solution(solution: &dyn Solution, part: Option<Part>) -> Duration {
+pub fn run_solution(solution: &dyn Solution, part: Option<Part>) -> Duration {
     let input = load(*solution.year(), *solution.day()).unwrap();
     println!(
         "[*] Running: {} Day {}: {}",

@@ -14,6 +14,8 @@ fn main() -> Result<()> {
         Commands::List(cmd) => commands::list::list(cmd)?,
         Commands::RunAll => commands::run::run_all()?,
         Commands::ListAll => commands::list::list_all()?,
+        Commands::Benchmark(cmd) => commands::benchmark::benchmark(cmd)?,
+        Commands::BenchmarkAll => commands::benchmark::benchmark_all()?,
     }
 
     Ok(())

@@ -13,7 +13,9 @@
     "generate:js": "node ./dist/generate-templates.js --lang=js",
     "start:js": "node ./dist/generate-templates.js --lang=js",
     "start": "pnpm run /^start:.*/",
-    "build": "tsc"
+    "build": "tsc",
+    "benchmark": "node ./dist/benchmark.js",
+    "generate:benchmark": "node ./dist/generate-benchmark.ts"
   },
   "keywords": [],
   "license": "ISC",

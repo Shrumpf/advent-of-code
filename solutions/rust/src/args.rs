@@ -22,6 +22,10 @@ pub enum Commands {
     List(ListArgs),
     RunAll,
     ListAll,
+    /// Benchmark a solution to a problem
+    Benchmark(BenchmarkArgs),
+    /// Benchmark all solutions
+    BenchmarkAll,
 }
 
 #[derive(Parser)]
@@ -44,6 +48,18 @@ pub struct ListArgs {
     /// The year to list solutions for
     #[arg(default_value_t = current_year())]
     pub year: u16,
+}
+
+#[derive(Parser)]
+pub struct BenchmarkArgs {
+    /// The day to benchmark
+    #[arg(default_value_t = current_day())]
+    pub day: u32,
+    /// The year to benchmark
+    #[arg(default_value_t = current_year())]
+    pub year: u16,
+    /// The part to benchmark, a or b
+    pub part: Option<Part>,
 }
 
 pub fn current_year() -> u16 {
