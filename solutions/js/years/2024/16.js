@@ -113,6 +113,76 @@ export function part_a(input) {
   return solution;
 }
 
+class PriorityQueue {
+  constructor() {
+    this.values = [];
+  }
+
+  enqueue(element, priority) {
+    this.values.push([element, priority]);
+    this._bubbleUp();
+  }
+
+  dequeue() {
+    if (!this.values.length) return null;
+    if (this.values.length === 1) return this.values.pop()[0];
+
+    const min = this.values[0][0];
+    const end = this.values.pop();
+    this.values[0] = end;
+    this._sinkDown();
+
+    return min;
+  }
+
+  _bubbleUp() {
+    let idx = this.values.length - 1;
+    while (idx > 0) {
+      const parentIdx = Math.floor((idx - 1) / 2);
+      if (this.values[parentIdx][1] <= this.values[idx][1]) break;
+      [this.values[idx], this.values[parentIdx]] = [
+        this.values[parentIdx],
+        this.values[idx],
+      ];
+      idx = parentIdx;
+    }
+  }
+
+  _sinkDown() {
+    let idx = 0;
+    const length = this.values.length;
+    while (true) {
+      let smallest = idx;
+      const leftIdx = 2 * idx + 1;
+      const rightIdx = 2 * idx + 2;
+
+      if (
+        leftIdx < length &&
+        this.values[leftIdx][1] < this.values[smallest][1]
+      ) {
+        smallest = leftIdx;
+      }
+      if (
+        rightIdx < length &&
+        this.values[rightIdx][1] < this.values[smallest][1]
+      ) {
+        smallest = rightIdx;
+      }
+      if (smallest === idx) break;
+
+      [this.values[idx], this.values[smallest]] = [
+        this.values[smallest],
+        this.values[idx],
+      ];
+      idx = smallest;
+    }
+  }
+
+  isEmpty() {
+    return this.values.length === 0;
+  }
+}
+
 /**
  *
  * @param {string} input
@@ -123,8 +193,6 @@ export function part_b(input) {
     .trim()
     .split(/\r?\n/)
     .map((line) => line.split(""));
-  let solution = Number.MAX_SAFE_INTEGER;
-  let bestPathTiles = new Set();
 
   const rows = list.length;
   const cols = list[0].length;
@@ -142,7 +210,6 @@ export function part_b(input) {
   const isValid = (y, x) => y >= 0 && y < rows && x >= 0 && x < cols;
 
   let start = [];
-
   findStart: for (let y = 0; y < list.length; y++) {
     for (let x = 0; x < list[y].length; x++) {
       if (list[y][x] === "S") {
@@ -152,82 +219,74 @@ export function part_b(input) {
     }
   }
 
-  function walk(startX, startY, startDir) {
-    let visited = new Map();
-    let queue = [[startY, startX, startDir, 0, [`${startY},${startX}`]]];
+  function findOptimalPaths() {
+    const distances = new Map();
+    const reachableTiles = new Set();
+    const queue = new PriorityQueue();
+    let minCostToEnd = Number.MAX_SAFE_INTEGER;
 
-    while (queue.length > 0) {
-      queue.sort((a, b) => a[3] - b[3]);
+    queue.enqueue(
+      [start[0], start[1], 1, new Set([`${start[0]},${start[1]}`])],
+      0
+    );
+    distances.set(`${start[0]},${start[1]},1`, 0);
+    reachableTiles.add(`${start[0]},${start[1]}`);
 
-      const [y, x, dir, cost, path] = queue.shift();
-      const state = `${y},${x},${dir}`;
+    while (!queue.isEmpty()) {
+      const [y, x, dir, currentTiles] = queue.dequeue();
+      const cost = distances.get(`${y},${x},${dir}`);
 
-      // Only skip if we've seen this exact state with a better cost
-      if (visited.has(state)) {
-        const prevCost = visited.get(state);
-        if (prevCost < cost) {
-          continue;
-        }
-      }
-
-      visited.set(state, cost);
+      if (cost > minCostToEnd) continue;
 
       if (list[y][x] === "E") {
-        if (cost <= solution) {
-          if (cost < solution) {
-            solution = cost;
-            bestPathTiles = new Set();
+        if (cost <= minCostToEnd) {
+          if (cost < minCostToEnd) {
+            minCostToEnd = cost;
+            reachableTiles.clear();
           }
-          path.forEach((pos) => bestPathTiles.add(pos));
+          currentTiles.forEach((tile) => reachableTiles.add(tile));
         }
         continue;
       }
 
-      if (cost > solution) {
-        continue;
-      }
-
-      let [dy, dx] = directions[dir];
-      const nx = x + dx;
+      const [dy, dx] = directions[dir];
       const ny = y + dy;
+      const nx = x + dx;
 
       if (isValid(ny, nx) && list[ny][nx] !== "#") {
-        queue.push([ny, nx, dir, cost + 1, [...path, `${ny},${nx}`]]);
+        const newCost = cost + 1;
+        const state = `${ny},${nx},${dir}`;
+        if (!distances.has(state) || distances.get(state) >= newCost) {
+          const newTiles = new Set(currentTiles);
+          newTiles.add(`${ny},${nx}`);
+          distances.set(state, newCost);
+          queue.enqueue([ny, nx, dir, newTiles], newCost);
+        }
       }
 
-      const leftDir = changeDirection(dir, -1);
-      const rightDir = changeDirection(dir, 1);
+      for (const turn of [-1, 1]) {
+        const newDir = changeDirection(dir, turn);
+        const [newDy, newDx] = directions[newDir];
+        const newY = y + newDy;
+        const newX = x + newDx;
 
-      const [leftDy, leftDx] = directions[leftDir];
-      const leftY = y + leftDy;
-      const leftX = x + leftDx;
-      if (isValid(leftY, leftX) && list[leftY][leftX] !== "#") {
-        queue.push([
-          leftY,
-          leftX,
-          leftDir,
-          cost + 1001,
-          [...path, `${leftY},${leftX}`],
-        ]);
-      }
-
-      const [rightDy, rightDx] = directions[rightDir];
-      const rightY = y + rightDy;
-      const rightX = x + rightDx;
-      if (isValid(rightY, rightX) && list[rightY][rightX] !== "#") {
-        queue.push([
-          rightY,
-          rightX,
-          rightDir,
-          cost + 1001,
-          [...path, `${rightY},${rightX}`],
-        ]);
+        if (isValid(newY, newX) && list[newY][newX] !== "#") {
+          const newCost = cost + 1001;
+          const state = `${newY},${newX},${newDir}`;
+          if (!distances.has(state) || distances.get(state) >= newCost) {
+            const newTiles = new Set(currentTiles);
+            newTiles.add(`${newY},${newX}`);
+            distances.set(state, newCost);
+            queue.enqueue([newY, newX, newDir, newTiles], newCost);
+          }
+        }
       }
     }
+
+    return reachableTiles.size;
   }
 
-  walk(start[1], start[0], 1);
-  return bestPathTiles.size;
+  return findOptimalPaths();
 }
 
 part_a(exampleInput);
