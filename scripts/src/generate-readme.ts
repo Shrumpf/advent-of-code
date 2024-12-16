@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { existsSync, writeFileSync } from "fs";
 import path from "path";
-import { languages, LATEST_YEAR, ReadmeConfig } from "./lib/config";
+import { languages, LATEST_YEAR, ReadmeConfig } from "./lib/config.js";
 
 const { PROJECT_ROOT } = process.env;
 

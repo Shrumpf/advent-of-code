@@ -4,22 +4,24 @@ import { readInput } from "./read.js";
 import { existsSync, readdirSync } from "fs";
 import minimist from "minimist";
 
-let { year, day, all } = minimist(process.argv.slice(2), {
+let { year, day, all, iterations, warmup } = minimist(process.argv.slice(2), {
   string: ["year", "day"],
   default: {
     year: new Date().getFullYear().toString(),
     day: new Date().getDate().toString().padStart(2, "0"),
     all: false,
+    iterations: 100,
+    warmup: 10,
   },
 });
 
 day = day.padStart(2, "0");
 
-async function measurePerformance(fn, iterations = 100) {
+async function measurePerformance(fn) {
   const times = [];
 
   // Warmup
-  for (let i = 0; i < 10; i++) await fn();
+  for (let i = 0; i < warmup; i++) await fn();
 
   // Measure
   for (let i = 0; i < iterations; i++) {
@@ -96,8 +98,6 @@ async function benchmarkEverything() {
   }
 }
 
-// Main execution
-// const [year, day] = process.argv.slice(2).map(Number);
 if (all) {
   benchmarkEverything().catch(console.error);
 } else if (year && day) {

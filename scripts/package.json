@@ -15,7 +15,9 @@
     "start": "pnpm run /^start:.*/",
     "build": "tsc",
     "benchmark": "node ./dist/benchmark.js",
-    "generate:benchmark": "node ./dist/generate-benchmark.ts"
+    "generate:benchmark": "node ./dist/generate-benchmark.js",
+    "generate:readme": "node ./dist/generate-readme.js",
+    "end": "pnpm run download:md && pnpm run benchmark && pnpm run generate:benchmark && pnpm run generate:readme"
   },
   "keywords": [],
   "license": "ISC",

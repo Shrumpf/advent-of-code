@@ -6,11 +6,13 @@ import { existsSync } from "fs";
 import path from "path";
 import minimist from "minimist";
 
-let { year, day } = minimist(process.argv.slice(2), {
+let { year, day, iterations, warmup } = minimist(process.argv.slice(2), {
   string: ["year", "day"],
   default: {
     year: new Date().getFullYear().toString(),
     day: new Date().getDate().toString().padStart(2, "0"),
+    iterations: 100,
+    warmup: 10,
   },
 });
 
@@ -39,7 +41,7 @@ async function benchmark(year: number, day: number) {
 
   // JavaScript benchmark command
   await execAsync(
-    `cd ../solutions/js && pnpm run benchmark --year=${year} --day=${day}`
+    `cd ../solutions/js && pnpm run benchmark --year=${year} --day=${day} --iterations=${iterations} --warmup=${warmup}`
   );
 
   // Rust benchmark command
