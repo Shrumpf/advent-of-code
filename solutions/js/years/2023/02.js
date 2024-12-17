@@ -74,8 +74,6 @@ export function part_b(input) {
         }
 
         solution += (colors.green * colors.blue * colors.red);
-
-        debugger;
     }
 
     return solution;
