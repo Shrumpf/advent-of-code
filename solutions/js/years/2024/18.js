@@ -27,15 +27,16 @@ function printMap(list, rx, ry) {
  * @returns {string | number}
  */
 export function part_a(input) {
+  const isTest = input.split(/\r?\n/).length === 25;
   // Example input is shorter and only uses 12 bytes instead of 1024.
-  const list = input
-    .trim()
-    .split(/\r?\n/)
-    .map((line) => line.split(",").map((n) => parseInt(n, 10)))
-    .slice(0, input.length > 100 ? 1024 : 12);
+  const list = new Set(
+    input
+      .trim()
+      .split(/\r?\n/)
+      .slice(0, isTest ? 12 : 1024)
+  );
 
-  // assuming that the highest coordinate is also the boundary.
-  const size = Math.max(...list.flat()) + 1;
+  const size = isTest ? 7 : 71;
 
   const directions = [
     [-1, 0],
@@ -67,7 +68,7 @@ export function part_a(input) {
 
         if (
           isValid(ny, nx) &&
-          !list.some(([x, y]) => nx === x && ny === y) &&
+          !list.has(`${ny},${nx}`) &&
           !visited.has(`${ny},${nx}`)
         ) {
           visited.add(`${ny},${nx}`);
@@ -86,13 +87,11 @@ export function part_a(input) {
  * @returns {string | number}
  */
 export function part_b(input) {
-  const list = input
-    .trim()
-    .split(/\r?\n/)
-    .map((line) => line.split(",").map((n) => parseInt(n, 10)));
+  const isTest = input.split(/\r?\n/).length === 25;
 
-  // assuming that the highest coordinate is also the boundary.
-  const size = Math.max(...list.flat()) + 1;
+  const list = new Set(input.trim().split(/\r?\n/));
+
+  const size = isTest ? 7 : 71;
 
   const directions = [
     [-1, 0],
@@ -124,7 +123,7 @@ export function part_b(input) {
 
         if (
           isValid(ny, nx) &&
-          !list.some(([x, y]) => nx === x && ny === y) &&
+          !list.has(`${ny},${nx}`) &&
           !visited.has(`${ny},${nx}`)
         ) {
           visited.add(`${ny},${nx}`);
@@ -137,21 +136,21 @@ export function part_b(input) {
   }
 
   // Example input is shorter and only uses 12 bytes instead of 1024.
-  let left = input.length > 100 ? 1024 : 12;
-  let right = list.length;
+  let left = isTest ? 12 : 1024;
+  let right = list.size;
 
   let solution = 0;
 
   while (left <= right) {
     const mid = Math.floor((left + right) / 2);
-    if (walk(list.slice(0, mid)) !== null) {
+    if (walk(new Set([...list].slice(0, mid))) !== null) {
       solution = mid;
       left = mid + 1;
     } else {
       right = mid - 1;
     }
   }
-  return list[solution].join(",");
+  return [...list][solution];
 }
 
 part_a(exampleInput);
