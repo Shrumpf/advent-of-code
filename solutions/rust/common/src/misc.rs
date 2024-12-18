@@ -55,7 +55,7 @@ pub fn load_example_solution(year: u16, day: u32, part: Part) -> Answer {
     let file = fs::read_to_string(path);
 
     match file {
-        Ok(file) => file.parse::<u64>().unwrap().into(),
+        Ok(file) => file.into(),
         Err(err) => panic!("{}", err),
     }
 }
