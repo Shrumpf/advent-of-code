@@ -13,8 +13,7 @@ describe("2024 18", () => {
       c.skip("solution is undefined");
       return;
     }
-    assert.equal(solution, 146);
-    // readExampleSolution("2024", "18", "a")
+    assert.equal(solution, readExampleSolution("2024", "18", "a"));
   });
 
   it("Part B", (c) => {
@@ -23,7 +22,6 @@ describe("2024 18", () => {
       c.skip("solution is undefined");
       return;
     }
-    assert.equal(solution, "5,4");
-    // readExampleSolution("2024", "18", "b")
+    assert.equal(solution, readExampleSolution("2024", "18", "b"));
   });
 });

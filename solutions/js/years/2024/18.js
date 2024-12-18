@@ -27,14 +27,15 @@ function printMap(list, rx, ry) {
  * @returns {string | number}
  */
 export function part_a(input) {
+  // Example input is shorter and only uses 12 bytes instead of 1024.
   const list = input
     .trim()
     .split(/\r?\n/)
     .map((line) => line.split(",").map((n) => parseInt(n, 10)))
-    .slice(0, 1024);
+    .slice(0, input.length > 100 ? 1024 : 12);
 
-  const rows = 71;
-  const cols = 71;
+  // assuming that the highest coordinate is also the boundary.
+  const size = Math.max(...list.flat()) + 1;
 
   const directions = [
     [-1, 0],
@@ -43,7 +44,7 @@ export function part_a(input) {
     [0, -1],
   ];
 
-  const isValid = (y, x) => y >= 0 && y < rows && x >= 0 && x < cols;
+  const isValid = (y, x) => y >= 0 && y < size && x >= 0 && x < size;
 
   function walk(list) {
     let visited = new Set(["0,0"]);
@@ -56,7 +57,7 @@ export function part_a(input) {
       //   console.log(y, x);
       //   printMap(list, x, y);
 
-      if (x == rows - 1 && y == cols - 1) {
+      if (x == size - 1 && y == size - 1) {
         return cost;
       }
 
@@ -90,8 +91,8 @@ export function part_b(input) {
     .split(/\r?\n/)
     .map((line) => line.split(",").map((n) => parseInt(n, 10)));
 
-  const rows = 71;
-  const cols = 71;
+  // assuming that the highest coordinate is also the boundary.
+  const size = Math.max(...list.flat()) + 1;
 
   const directions = [
     [-1, 0],
@@ -100,7 +101,7 @@ export function part_b(input) {
     [0, -1],
   ];
 
-  const isValid = (y, x) => y >= 0 && y < rows && x >= 0 && x < cols;
+  const isValid = (y, x) => y >= 0 && y < size && x >= 0 && x < size;
 
   function walk(list) {
     let visited = new Set(["0,0"]);
@@ -113,7 +114,7 @@ export function part_b(input) {
       //   console.log(y, x);
       //   printMap(list, x, y);
 
-      if (x == rows - 1 && y == cols - 1) {
+      if (x == size - 1 && y == size - 1) {
         return cost;
       }
 
@@ -135,7 +136,8 @@ export function part_b(input) {
     return null;
   }
 
-  let left = 1024; // 1024
+  // Example input is shorter and only uses 12 bytes instead of 1024.
+  let left = input.length > 100 ? 1024 : 12;
   let right = list.length;
 
   let solution = 0;
