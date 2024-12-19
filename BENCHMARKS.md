@@ -1,5 +1,11 @@
 # Benchmarks 2024
 
+## Day 19
+
+| Language | Part A | Part B |
+|----------|--------|---------|
+| JS | + 14.98ms | + 56.46ms |
+
 ## Day 18
 
 | Language | Part A | Part B |
