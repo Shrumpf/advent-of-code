@@ -1,5 +1,11 @@
 # Benchmarks 2024
 
+## Day 21
+
+| Language | Part A | Part B |
+|----------|--------|---------|
+| JS | + 393.29µs | + 2.22ms |
+
 ## Day 20
 
 | Language | Part A | Part B |
