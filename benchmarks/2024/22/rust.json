@@ -1,0 +1,10 @@
+{
+  "part_a": {
+    "time": 7472750,
+    "iterations": 100
+  },
+  "part_b": {
+    "time": 935299625,
+    "iterations": 100
+  }
+}
