@@ -1,7 +1,6 @@
 use std::collections::{HashSet, VecDeque};
 
 use common::{Answer, Solution};
-use itertools::Itertools;
 
 pub struct Day20;
 
