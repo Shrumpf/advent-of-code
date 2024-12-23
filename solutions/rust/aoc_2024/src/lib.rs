@@ -9,10 +9,10 @@ mod day_18;
 mod day_19;
 mod day_20;
 mod day_22;
+mod day_23;
 // [import_marker]
 
-pub const ALL: [&dyn Solution; 8] = [
-pub const ALL: [&dyn Solution; 9] = [
+pub const ALL: [&dyn Solution; 10] = [
     &day_01::Day01,
     &day_02::Day02,
     &day_03::Day03,
@@ -22,5 +22,6 @@ pub const ALL: [&dyn Solution; 9] = [
     &day_19::Day19,
     &day_20::Day20,
     &day_22::Day22,
+    &day_23::Day23,
     // [list_marker]
 ];
