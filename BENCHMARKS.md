@@ -1,5 +1,12 @@
 # Benchmarks 2024
 
+## Day 23
+
+| Language | Part A | Part B |
+|----------|--------|---------|
+| Rust | + 3.23ms | + 2.00ms |
+| JS | - 5.06ms (+56.9%) | - 2.30ms (+14.9%) |
+
 ## Day 22
 
 | Language | Part A | Part B |
