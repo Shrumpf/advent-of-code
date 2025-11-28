@@ -1,0 +1,5 @@
+{
+  "name": "Rust",
+  "solutionPath": "aoc_{year}/src",
+  "filePattern": "day_{day}.rs"
+}

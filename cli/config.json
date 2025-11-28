@@ -1,0 +1,9 @@
+{
+  "defaultLanguage": "js",
+  "readme": {
+    "includeEmptyYears": false,
+    "includeEmptyDays": true,
+    "hideFutureDays": false,
+    "unlinkFutureDays": true
+  }
+}

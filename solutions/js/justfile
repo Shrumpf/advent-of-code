@@ -49,6 +49,12 @@ list-all:
 bench day=default_day year=default_year:
     node ./tools/benchmark.js --day={{day}} --year={{year}}
 
+bench-year year=default_year:
+    node ./tools/benchmark.js --year={{year}}
+
+bench-all:
+    node ./tools/benchmark.js --all
+
 # Watch mode
 watch day=default_day year=default_year:
     #!/usr/bin/env sh

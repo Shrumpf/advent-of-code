@@ -553,3 +553,7 @@ FodyWeavers.xsd
 
 # Mac shit
 .DS_Store
+
+# Go CLI
+cli/cli
+cli/.env
