@@ -1,0 +1,20 @@
+[
+  {
+    "label": "JS: Debug Day",
+    "adapter": "JavaScript",
+    "request": "launch",
+    "program": "${workspace_root}/solutions/js/main.js",
+    "args": ["--day=1", "--year=2024"],
+    "cwd": "${workspace_root}/solutions/js"
+  },
+  {
+    "label": "Rust: Debug Day",
+    "adapter": "lldb",
+    "request": "launch",
+    "cargo": {
+      "args": ["build", "--package=shrumpf-aoc"]
+    },
+    "args": ["run", "1", "2024"],
+    "cwd": "${workspace_root}/solutions/rust"
+  }
+]

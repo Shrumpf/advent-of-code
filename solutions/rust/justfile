@@ -1,0 +1,42 @@
+# Rust solutions - uses cargo runner
+
+default_year := `date +%Y`
+default_day := `date +%-d`
+
+_default:
+    @just --list
+
+# Run a day (matches root interface: run [day] [year] [part])
+run day=default_day year=default_year part="":
+    cargo run --release run {{day}} {{year}} {{part}}
+
+run-year year=default_year:
+    cargo run --release -- run-year {{year}}
+
+# Run in debug mode (unoptimized, for debugging)
+debug day=default_day year=default_year:
+    cargo run run {{day}} {{year}}
+
+# Benchmark
+bench day=default_day year=default_year:
+    cargo run --release benchmark {{day}} {{year}}
+
+# List available days
+list year=default_year:
+    cargo run --release list {{year}}
+
+# List all
+list-all:
+    cargo run --release list-all
+
+# Run all solutions
+run-all:
+    cargo run --release run-all
+
+# Test
+test day=default_day year=default_year:
+    cargo test -p aoc_{{year}} day_{{day}}
+
+# Build (for faster subsequent runs)
+build:
+    cargo build --release

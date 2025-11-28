@@ -3,7 +3,10 @@ use std::time::{Duration, Instant};
 use anyhow::{Context, Result};
 use common::{load, Part, Solution};
 
-use crate::{args::RunArgs, get_year, get_years};
+use crate::{
+    args::{ListArgs, RunArgs},
+    get_year, get_years,
+};
 
 pub fn run_solution(solution: &dyn Solution, part: Option<Part>) -> Duration {
     let input = load(*solution.year(), *solution.day()).unwrap();
@@ -64,6 +67,26 @@ pub fn run_all() -> Result<()> {
         years.len(),
         solutions,
         sum
+    );
+
+    Ok(())
+}
+
+pub fn run_year(cmd: &ListArgs) -> Result<()> {
+    let year = get_year(cmd.year);
+
+    let mut sum = Duration::new(0, 0);
+    let mut solutions = 0;
+
+    for solution in year {
+        solutions += 1;
+
+        sum += run_solution(*solution, None);
+    }
+
+    println!(
+        "Everything done. {} solution(s) with 2 parts took {:.2?}",
+        solutions, sum
     );
 
     Ok(())

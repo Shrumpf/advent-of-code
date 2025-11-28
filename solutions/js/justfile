@@ -1,0 +1,59 @@
+# JavaScript solutions - uses main.js runner
+
+default_year := `date +%Y`
+default_day := `date +%-d`
+
+_default:
+    @just --list
+
+# Run a day (matches root interface: run <day> [year])
+run day=default_day year=default_year part="":
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun ./main.js --day={{day}} --year={{year}} {{ if part != "" { "--part=" + part } else { "" } }}
+    else
+        node ./main.js --day={{day}} --year={{year}} {{ if part != "" { "--part=" + part } else { "" } }}
+    fi
+# Run all days in a year
+run-year year=default_year:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun ./main.js --year={{year}} --all
+    else
+        node ./main.js --year={{year}} --all
+    fi
+
+# Run everything (all years)
+run-all:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun ./main.js --all-years
+    else
+        node ./main.js --all-years
+    fi
+
+# TODO: Add list commands to main.js runner
+# List available days
+list year=default_year:
+    @ls -1 years/{{year}}/*.js 2>/dev/null | sed 's/.*\///' | sed 's/\.js$//' | sort || echo "No solutions for {{year}}"
+
+# List all years
+list-all:
+    @for year in years/*/; do \
+        y=$$(basename $$year); \
+        count=$$(ls -1 "$$year"*. js 2>/dev/null | wc -l | tr -d ' '); \
+        echo "$$y: $$count days"; \
+    done
+
+# Benchmark
+bench day=default_day year=default_year:
+    node ./tools/benchmark.js --day={{day}} --year={{year}}
+
+# Watch mode
+watch day=default_day year=default_year:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun --watch ./main.js --day={{day}} --year={{year}}
+    else
+        node --watch ./main.js --day={{day}} --year={{year}}
+    fi

@@ -21,6 +21,7 @@ pub enum Commands {
     /// List all solutions for a given year
     List(ListArgs),
     RunAll,
+    RunYear(ListArgs),
     ListAll,
     /// Benchmark a solution to a problem
     Benchmark(BenchmarkArgs),

@@ -1,0 +1,1 @@
+Look at [ARCHITECTURE.md](./ARCHITECTURE.md)
