@@ -69,9 +69,9 @@ func (g *Generator) generateDayCell(year, day int, hasSolution bool, solutions s
 
 	var baseCell string
 	if cfg.UnlinkFutureDays && isFutureDate(year, day) {
-		baseCell = fmt.Sprintf("**%d**", day)
+		baseCell = fmt.Sprintf("**%02d**", day)
 	} else {
-		baseCell = fmt.Sprintf("[**%d**](https://adventofcode.com/%d/day/%d)", day, year, day)
+		baseCell = fmt.Sprintf("[**%02d**](https://adventofcode.com/%d/day/%d)", day, year, day)
 	}
 
 	if !hasSolution && !cfg.IncludeEmptyDays {
