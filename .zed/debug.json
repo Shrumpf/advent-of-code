@@ -4,7 +4,10 @@
     "adapter": "JavaScript",
     "request": "launch",
     "program": "${workspace_root}/solutions/js/main.js",
-    "args": ["--day=1", "--year=2024"],
+    "args": [
+      "--day=1",
+      "--year=2025"
+    ],
     "cwd": "${workspace_root}/solutions/js"
   },
   {
@@ -12,9 +15,16 @@
     "adapter": "lldb",
     "request": "launch",
     "cargo": {
-      "args": ["build", "--package=shrumpf-aoc"]
+      "args": [
+        "build",
+        "--package=shrumpf-aoc"
+      ]
     },
-    "args": ["run", "1", "2024"],
+    "args": [
+      "run",
+      "1",
+      "2025"
+    ],
     "cwd": "${workspace_root}/solutions/rust"
   }
 ]

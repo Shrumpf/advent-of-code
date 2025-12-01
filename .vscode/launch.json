@@ -125,7 +125,7 @@
       "id": "year",
       "type": "promptString",
       "description": "Year (e.g., 2025)",
-      "default": "2024"
+      "default": "2025"
     },
     {
       "id": "day",

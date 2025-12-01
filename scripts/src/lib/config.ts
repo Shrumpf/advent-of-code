@@ -33,4 +33,4 @@ export const languages: Record<string, LanguageConfig> = {
   },
 };
 
-export const LATEST_YEAR = 2024;
+export const LATEST_YEAR = 2025;

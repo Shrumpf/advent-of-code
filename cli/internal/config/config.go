@@ -12,7 +12,7 @@ import (
 )
 
 // LatestYear is the most recent AoC year
-const LatestYear = 2024
+const LatestYear = 2025
 
 // Language represents a programming language configuration loaded from language.json
 type Language struct {
