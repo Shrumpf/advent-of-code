@@ -111,7 +111,7 @@ func (h *HTMLToMarkdown) processElement(n *html.Node, result *strings.Builder, i
 		result.WriteString("\n")
 
 	case "hr":
-		result.WriteString("\n---\n\n")
+		result.WriteString("\n---\n")
 
 	case "strong", "b":
 		result.WriteString("**")
@@ -124,21 +124,21 @@ func (h *HTMLToMarkdown) processElement(n *html.Node, result *strings.Builder, i
 			h.processChildren(n, result, inCode)
 		} else if isParentCode(n) {
 			// Handle emphasized code: move emphasis outside
-			result.WriteString("*`")
+			result.WriteString("**`")
 			h.processChildren(n, result, true)
-			result.WriteString("`*")
+			result.WriteString("`**")
 		} else {
-			result.WriteString("*")
+			result.WriteString("**")
 			h.processChildren(n, result, inCode)
-			result.WriteString("*")
+			result.WriteString("**")
 		}
 
 	case "code":
 		if hasOnlyEmChild(n) {
 			// Emphasized code block - move emphasis outside
-			result.WriteString("*`")
+			result.WriteString("**`")
 			h.processChildren(n, result, true)
-			result.WriteString("`*")
+			result.WriteString("`**")
 		} else {
 			result.WriteString("`")
 			h.processChildren(n, result, true)
@@ -146,9 +146,15 @@ func (h *HTMLToMarkdown) processElement(n *html.Node, result *strings.Builder, i
 		}
 
 	case "pre":
-		result.WriteString("\n```\n")
-		h.processChildren(n, result, true)
-		result.WriteString("\n```\n\n")
+		if isOnlyCodeChild(n) {
+			result.WriteString("\n```\n")
+			h.processChildren(n.FirstChild, result, true)
+			result.WriteString("\n```\n\n")
+		} else {
+			result.WriteString("\n```\n")
+			h.processChildren(n, result, true)
+			result.WriteString("\n```\n\n")
+		}
 
 	case "a":
 		href := getAttr(n, "href")
@@ -159,7 +165,7 @@ func (h *HTMLToMarkdown) processElement(n *html.Node, result *strings.Builder, i
 			}
 			result.WriteString("<a href=\"")
 			result.WriteString(href)
-			result.WriteString("\">")
+			result.WriteString("\" target=\"_blank\">")
 			h.processChildren(n, result, inCode)
 			result.WriteString("</a>")
 		} else {
@@ -168,7 +174,7 @@ func (h *HTMLToMarkdown) processElement(n *html.Node, result *strings.Builder, i
 
 	case "ul":
 		result.WriteString("\n")
-		h.processListItems(n, result, "- ", inCode)
+		h.processListItems(n, result, "* ", inCode)
 		result.WriteString("\n")
 
 	case "ol":
@@ -249,6 +255,8 @@ func (h *HTMLToMarkdown) processOrderedListItems(n *html.Node, result *strings.B
 func (h *HTMLToMarkdown) escapeMarkdown(text string) string {
 	// Don't escape too aggressively, only escape characters that would cause issues
 	// Preserve readability
+	text = strings.ReplaceAll(text, "_", "\\_")
+	text = strings.ReplaceAll(text, "*", "\\*")
 	return text
 }
 
@@ -264,6 +272,9 @@ func (h *HTMLToMarkdown) cleanupMarkdown(md string) string {
 		lines[i] = strings.TrimRight(line, " \t")
 	}
 	md = strings.Join(lines, "\n")
+
+	// Collapse double spaces after periods
+	md = regexp.MustCompile(`\.  `).ReplaceAllString(md, ". ")
 
 	// Trim leading and trailing whitespace
 	md = strings.TrimSpace(md)
@@ -312,4 +323,12 @@ func hasOnlyEmChild(n *html.Node) bool {
 		}
 	}
 	return emCount == 1 && otherCount == 0
+}
+
+// isOnlyCodeChild returns true if n has exactly one child and it is a <code> element
+func isOnlyCodeChild(n *html.Node) bool {
+	return n.FirstChild != nil &&
+		n.FirstChild.Type == html.ElementNode &&
+		strings.ToLower(n.FirstChild.Data) == "code" &&
+		n.FirstChild.NextSibling == nil
 }

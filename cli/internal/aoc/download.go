@@ -86,18 +86,18 @@ func (d *Downloader) DownloadMarkdown(year, day int) error {
 		return fmt.Errorf("failed to download puzzle page: %w", err)
 	}
 
-	// Extract articles
-	articles := ExtractArticles(html)
-	if articles == "" {
+	// Extract content
+	content := ExtractContent(html)
+	if content == "" {
 		return fmt.Errorf("no puzzle content found")
 	}
 
 	// Strip the "--- Title ---" formatting
-	articles = StripHyphens(articles)
+	content = StripHyphens(content)
 
 	// Convert to markdown
 	converter := NewHTMLToMarkdown()
-	markdown, err := converter.Convert(articles)
+	markdown, err := converter.Convert(content)
 	if err != nil {
 		return fmt.Errorf("failed to convert to markdown: %w", err)
 	}

@@ -93,14 +93,31 @@
     // GO CLI (for debugging the tooling itself)
     // ═══════════════════════════════════════════════════════════════
     {
-      "name": "Go CLI: Download",
+      "name": "Go CLI: Download Input",
       "type": "go",
       "request": "launch",
       "mode": "debug",
       "program": "${workspaceFolder}/cli",
       "args": [
         "download",
+        "input",
         "${input:year}",
+        "${input:day}"
+      ],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Go CLI: Download Markdown",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/cli",
+      "args": [
+        "download",
+        "markdown",
+        "-y",
+        "${input:year}",
+        "-d",
         "${input:day}"
       ],
       "cwd": "${workspaceFolder}"

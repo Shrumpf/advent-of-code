@@ -91,10 +91,10 @@ func (c *Client) GetPuzzlePage(year, day int) (string, error) {
 	return string(data), nil
 }
 
-// ExtractArticles extracts the <article> elements from the puzzle page HTML
-func ExtractArticles(html string) string {
-	// Match all article tags and their content
-	re := regexp.MustCompile(`(?is)<article\b[^>]*>.*?</article>`)
+// ExtractContent extracts the <article> and <p> elements from the puzzle page HTML
+func ExtractContent(html string) string {
+	// Match all article and paragraph tags and their content
+	re := regexp.MustCompile(`(?is)<article\b[^>]*>.*?</article>|<p\b[^>]*>.*?</p>`)
 	matches := re.FindAllString(html, -1)
 
 	if len(matches) == 0 {
