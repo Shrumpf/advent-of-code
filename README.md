@@ -1,9 +1,9 @@
 # Advent of Code
 ## [Advent of Code](https://adventofcode.com) Solutions in [JS](/solutions/js) and [Rust](/solutions/rust)
-## [2025](https://adventofcode.com/2025) ([<img height=18 src="./assets/js.svg"> JS](/solutions/js/years/2025): 1/25)
+## [2025](https://adventofcode.com/2025) ([<img height=18 src="./assets/js.svg"> JS](/solutions/js/years/2025): 2/25)
 |Mo|Tu|We|Th|Fr|Sa|Su|
 |-|-|-|-|-|-|-|
-|[**01**](https://adventofcode.com/2025/day/1) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/01.js "JS solution for 2025/01")|**02**|**03**|**04**|**05**|**06**|**07**|
+|[**01**](https://adventofcode.com/2025/day/1) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/01.js "JS solution for 2025/01")|[**02**](https://adventofcode.com/2025/day/2) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/02.js "JS solution for 2025/02")|**03**|**04**|**05**|**06**|**07**|
 |**08**|**09**|**10**|**11**|**12**|**13**|**14**|
 |**15**|**16**|**17**|**18**|**19**|**20**|**21**|
 |**22**|**23**|**24**|**25**||||
