@@ -8,29 +8,14 @@ _default:
 
 # Run a day (matches root interface: run <day> [year])
 run day=default_day year=default_year part="":
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun ./main.js --day={{day}} --year={{year}} {{ if part != "" { "--part=" + part } else { "" } }}
-    else
-        node ./main.js --day={{day}} --year={{year}} {{ if part != "" { "--part=" + part } else { "" } }}
-    fi
+    node ./main.js --day={{day}} --year={{year}} {{ if part != "" { "--part=" + part } else { "" } }}
 # Run all days in a year
 run-year year=default_year:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun ./main.js --year={{year}} --all
-    else
-        node ./main.js --year={{year}} --all
-    fi
+    node ./main.js --year={{year}} --all
 
 # Run everything (all years)
 run-all:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun ./main.js --all-years
-    else
-        node ./main.js --all-years
-    fi
+    node ./main.js --all-years
 
 # TODO: Add list commands to main.js runner
 # List available days
@@ -57,41 +42,16 @@ bench-all:
 
 # Watch mode
 watch day=default_day year=default_year:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun --watch ./main.js --day={{day}} --year={{year}}
-    else
-        node --watch ./main.js --day={{day}} --year={{year}}
-    fi
+    node --watch ./main.js --day={{day}} --year={{year}}
 
 test day=default_day year=default_year:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun test ./**/{{year}}/{{day}}.test.js
-    else
-        node --test ./**/{{year}}/{{day}}.test.js
-    fi
+    node --test ./**/{{year}}/{{day}}.test.js
 
 test-year year=default_year:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun test ./**/{{year}}/*.test.js
-    else
-        node --test ./**/{{year}}/*.test.js
-    fi
+    node --test ./**/{{year}}/*.test.js
 
 test-all:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun test
-    else
-        node --test
-    fi
+    node --test
 
 test-watch day=default_day year=default_year:
-    #!/usr/bin/env sh
-    if command -v bun > /dev/null 2>&1; then
-        bun --watch test ./**/{{year}}/{{day}}.test.js
-    else
-        node --watch --test ./**/{{year}}/{{day}}.test.js
-    fi
+    node --watch --test ./**/{{year}}/{{day}}.test.js

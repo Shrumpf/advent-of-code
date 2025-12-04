@@ -80,7 +80,7 @@ Both JavaScript and Rust use a **runner pattern** where a central entry point di
 ### JavaScript Runner
 
 ```
-bun main.js [--day=N] [--year=YYYY] [--part=P] [--all] [--all-years]
+node main.js [--day=N] [--year=YYYY] [--part=P] [--all] [--all-years]
 ```
 
 The runner dynamically imports day modules from `years/YYYY/DD.js`:

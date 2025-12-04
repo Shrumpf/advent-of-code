@@ -1,5 +1,3 @@
-#!/usr/bin/env bun
-
 import { readInput } from "./tools/read.js";
 import minimist from "minimist";
 import { readdirSync, existsSync } from "fs";
