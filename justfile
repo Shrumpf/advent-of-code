@@ -1,7 +1,7 @@
 # Root justfile - unified interface for all languages
 
 default_year := `date +%Y`
-default_day := `date +%-d`
+default_day := `date +%d`
 
 _default:
     @just --list
@@ -37,6 +37,14 @@ list-all lang:
 test lang day=default_day year=default_year:
     just solutions/{{lang}}/test {{day}} {{year}}
 
+test-year lang year=default_year:
+    just solutions/{{lang}}/test-year {{year}}
+
+test-all lang:
+    just solutions/{{lang}}/test-all
+
+test-watch lang day=default_day year=default_year:
+    just solutions/{{lang}}/test-watch {{day}} {{year}}
 
 
 # === Shortcuts ===

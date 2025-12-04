@@ -1,7 +1,7 @@
 # Rust solutions - uses cargo runner
 
 default_year := `date +%Y`
-default_day := `date +%-d`
+default_day := `date +%d`
 
 _default:
     @just --list
@@ -36,6 +36,12 @@ run-all:
 # Test
 test day=default_day year=default_year:
     cargo test -p aoc_{{year}} day_{{day}}
+
+test-year year=default_year:
+    cargo test -p aoc_{{year}}
+
+test-all:
+    cargo test --workspace
 
 # Build (for faster subsequent runs)
 build:

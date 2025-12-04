@@ -130,7 +130,6 @@ async function runAllYears() {
   let grandTotal = 0;
 
   for (const year of years) {
-    const yearStart = performance.now();
     console.log(`\n📅 ${year}`);
 
     const yearsPath = join(yearsDir, year);

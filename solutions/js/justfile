@@ -1,7 +1,7 @@
 # JavaScript solutions - uses main.js runner
 
 default_year := `date +%Y`
-default_day := `date +%-d`
+default_day := `date +%d`
 
 _default:
     @just --list
@@ -62,4 +62,36 @@ watch day=default_day year=default_year:
         bun --watch ./main.js --day={{day}} --year={{year}}
     else
         node --watch ./main.js --day={{day}} --year={{year}}
+    fi
+
+test day=default_day year=default_year:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun test ./**/{{year}}/{{day}}.test.js
+    else
+        node --test ./**/{{year}}/{{day}}.test.js
+    fi
+
+test-year year=default_year:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun test ./**/{{year}}/*.test.js
+    else
+        node --test ./**/{{year}}/*.test.js
+    fi
+
+test-all:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun test
+    else
+        node --test
+    fi
+
+test-watch day=default_day year=default_year:
+    #!/usr/bin/env sh
+    if command -v bun > /dev/null 2>&1; then
+        bun --watch test ./**/{{year}}/{{day}}.test.js
+    else
+        node --watch --test ./**/{{year}}/{{day}}.test.js
     fi
