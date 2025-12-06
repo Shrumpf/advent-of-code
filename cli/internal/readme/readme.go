@@ -87,6 +87,12 @@ func (g *Generator) generateCalendar(year int) []string {
 	var line []string
 	langs := make(map[string]int)
 
+	// Advent of Code traditionally has 25 days, but from 2025 onwards it's 12 days
+	calendarDays := 25
+	if year >= 2025 {
+		calendarDays = 12
+	}
+
 	// Get the day of week for December 1st
 	// time.Weekday: Sunday = 0, Monday = 1, ..., Saturday = 6
 	// We want Monday = 0, so we convert
@@ -95,11 +101,11 @@ func (g *Generator) generateCalendar(year int) []string {
 	mondayBased := int(firstDay+6) % 7
 
 	// Add empty cells for days before December 1st
-	for i := 0; i < mondayBased; i++ {
+	for range mondayBased {
 		line = append(line, "")
 	}
 
-	for day := 1; day <= 25; day++ {
+	for day := 1; day <= calendarDays; day++ {
 		if len(line) == 7 {
 			if g.config.Readme.IncludeEmptyDays || containsSolutions(line) {
 				lines = append(lines, line)
@@ -135,7 +141,7 @@ func (g *Generator) generateCalendar(year int) []string {
 		if count == 0 {
 			continue
 		}
-		stats = append(stats, fmt.Sprintf("[%s %s](%s): %d/25", logo(lang.Key, 18), lang.Name, lang.SolutionDir(year), count))
+		stats = append(stats, fmt.Sprintf("[%s %s](%s): %d/%d", logo(lang.Key, 18), lang.Name, lang.SolutionDir(year), count, calendarDays))
 	}
 
 	var result []string
