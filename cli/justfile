@@ -11,3 +11,5 @@ start lang=default_lang day=default_day year=default_year:
 end day=default_day year=default_year:
     ./cli end -d {{day}} -y {{year}}
 
+build:
+    go build .

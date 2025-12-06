@@ -65,3 +65,7 @@ start lang=default_lang day=default_day year=default_year:
 
 end day=default_day year=default_year:
     just cli/end {{day}} {{year}}
+
+# Build CLI
+build:
+    just cli/build
