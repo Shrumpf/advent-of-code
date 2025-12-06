@@ -1,0 +1,12 @@
+{
+  "part_a": {
+    "time": 587457.999999998,
+    "iterations": 100,
+    "memory": 6657792
+  },
+  "part_b": {
+    "time": 633082.9999999992,
+    "iterations": 100,
+    "memory": 7992672
+  }
+}
