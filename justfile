@@ -2,6 +2,7 @@
 
 default_year := `date +%Y`
 default_day := `date +%d`
+default_lang := "js"
 
 _default:
     @just --list
@@ -56,3 +57,11 @@ js day=default_day year=default_year:
 # Rust shortcut
 rust day=default_day year=default_year:
     just run rust {{day}} {{year}}
+
+# CLI commands
+
+start lang=default_lang day=default_day year=default_year:
+    just cli/start {{lang}} {{day}} {{year}}
+
+end day=default_day year=default_year:
+    just cli/end {{day}} {{year}}

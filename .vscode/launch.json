@@ -31,17 +31,6 @@
         "<node_internals>/**"
       ]
     },
-    {
-      "name": "JS: Debug Day (Bun)",
-      "type": "bun",
-      "request": "launch",
-      "program": "${workspaceFolder}/solutions/js/main.js",
-      "args": [
-        "--day=${input:day}",
-        "--year=${input:year}"
-      ],
-      "cwd": "${workspaceFolder}/solutions/js"
-    },
     // ═══════════════════════════════════════════════════════════════
     // RUST (via cargo runner)
     // ═══════════════════════════════════════════════════════════════

@@ -1,0 +1,13 @@
+default_year := `date +%Y`
+default_day := `date +%d`
+default_lang := "js"
+
+_default:
+    @just --list
+
+start lang=default_lang day=default_day year=default_year:
+    ./cli start -l {{lang}} -d {{day}} -y {{year}}
+
+end day=default_day year=default_year:
+    ./cli end -d {{day}} -y {{year}}
+
