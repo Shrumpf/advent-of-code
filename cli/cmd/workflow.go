@@ -8,6 +8,7 @@ import (
 	"github.com/shrumpf/advent-of-code/cli/internal/config"
 	"github.com/shrumpf/advent-of-code/cli/internal/generator"
 	"github.com/shrumpf/advent-of-code/cli/internal/readme"
+	"github.com/shrumpf/advent-of-code/cli/internal/workflow"
 	"github.com/spf13/cobra"
 )
 
@@ -83,7 +84,6 @@ Example:
 
 		fmt.Printf("Finishing day %d of %d...\n\n", day, year)
 
-		// 1. Download markdown (to get part 2)
 		fmt.Println("📄 Updating puzzle description...")
 		downloader, err := aoc.NewDownloader()
 		if err != nil {
@@ -94,14 +94,12 @@ Example:
 			}
 		}
 
-		// 2. Run benchmarks
 		fmt.Println("\n⏱️  Running benchmarks...")
 		runner := benchmark.NewRunner()
 		if err := runner.RunAll(year, day); err != nil {
 			fmt.Printf("   Warning: %v\n", err)
 		}
 
-		// 3. Generate documentation
 		fmt.Println("\n📝 Generating documentation...")
 		gen := readme.NewGenerator()
 
@@ -117,6 +115,15 @@ Example:
 			fmt.Printf("   Warning: failed to generate README.md: %v\n", err)
 		} else {
 			fmt.Printf("   ✓ Generated %s\n", readmePath)
+		}
+
+		fmt.Println("\n🧭 Committing changes...")
+		committer := workflow.NewCommitter()
+		if result, err := committer.Commit(year, day); err != nil {
+			fmt.Printf("   Warning: %v\n", err)
+		} else {
+			fmt.Printf("   ✓ Inputs commit: %s\n", result.InputsMessage)
+			fmt.Printf("   ✓ Root commit: %s\n", result.RootMessage)
 		}
 
 		fmt.Printf("\n✅ Day %d of %d complete!\n", day, year)
