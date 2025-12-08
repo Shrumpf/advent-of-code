@@ -2,6 +2,7 @@
 
 default_year := `date +%Y`
 default_day := `date +%d`
+default_unpadded_day := `date +%-d`
 default_lang := "js"
 
 _default:
@@ -60,10 +61,10 @@ rust day=default_day year=default_year:
 
 # CLI commands
 
-start lang=default_lang day=default_day year=default_year:
+start lang=default_lang day=default_unpadded_day year=default_year:
     just cli/start {{lang}} {{day}} {{year}}
 
-end day=default_day year=default_year:
+end day=default_unpadded_day year=default_year:
     just cli/end {{day}} {{year}}
 
 # Build CLI

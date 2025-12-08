@@ -1,5 +1,5 @@
 default_year := `date +%Y`
-default_day := `date +%d`
+default_day := `date +%-d`
 default_lang := "js"
 
 _default:
