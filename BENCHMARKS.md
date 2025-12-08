@@ -1,5 +1,11 @@
 # Benchmarks 2025
 
+## Day 8
+
+| Language | Part A | Part B |
+|----------|--------|---------|
+| JS | + 203.62ms | + 186.65ms |
+
 ## Day 7
 
 | Language | Part A | Part B |
