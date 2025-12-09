@@ -1,10 +1,10 @@
 # Advent of Code
 ## [Advent of Code](https://adventofcode.com) Solutions in [JS](/solutions/js) and [Rust](/solutions/rust)
-## [2025](https://adventofcode.com/2025) ([<img height=18 src="./assets/js.svg"> JS](/solutions/js/years/2025): 8/12)
+## [2025](https://adventofcode.com/2025) ([<img height=18 src="./assets/js.svg"> JS](/solutions/js/years/2025): 9/12)
 |Mo|Tu|We|Th|Fr|Sa|Su|
 |-|-|-|-|-|-|-|
 |[**01**](https://adventofcode.com/2025/day/1) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/01.js "JS solution for 2025/01")|[**02**](https://adventofcode.com/2025/day/2) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/02.js "JS solution for 2025/02")|[**03**](https://adventofcode.com/2025/day/3) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/03.js "JS solution for 2025/03")|[**04**](https://adventofcode.com/2025/day/4) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/04.js "JS solution for 2025/04")|[**05**](https://adventofcode.com/2025/day/5) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/05.js "JS solution for 2025/05")|[**06**](https://adventofcode.com/2025/day/6) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/06.js "JS solution for 2025/06")|[**07**](https://adventofcode.com/2025/day/7) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/07.js "JS solution for 2025/07")|
-|[**08**](https://adventofcode.com/2025/day/8) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/08.js "JS solution for 2025/08")|**09**|**10**|**11**|**12**|||
+|[**08**](https://adventofcode.com/2025/day/8) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/08.js "JS solution for 2025/08")|[**09**](https://adventofcode.com/2025/day/9) [<img height=12 src="./assets/js.svg">](/solutions/js/years/2025/09.js "JS solution for 2025/09")|**10**|**11**|**12**|||
 
 ## [2024](https://adventofcode.com/2024) ([<img height=18 src="./assets/js.svg"> JS](/solutions/js/years/2024): 23/25, [<img height=18 src="./assets/rust.svg"> Rust](/solutions/rust/aoc_2024/src): 10/25)
 |Mo|Tu|We|Th|Fr|Sa|Su|
